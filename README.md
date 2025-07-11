@@ -1,6 +1,7 @@
-# joycon2pp x C++
+# joycon2cpp
 
-This branch is currently under HEAVY production, a lot of things aren't here yet, but for now, it's a C++ rewrite of the entire repo to get gyro support. How nice!
+## DISCLAIMER
+This branch is under heavy construction. Right now, a lot is in testing.
 
 Dependencies to run the exe in the source code: ViGEmBus driver. thats it. you can get it in the joycon2py link, you probably have it
 
