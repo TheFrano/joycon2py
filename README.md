@@ -4,12 +4,16 @@ A C++ executable that makes Switch 2 controllers into working PC controllers.
 
 ---
 
+## WAIT!!!
+
+Before you use this branch, please keep in mind that it is SUPER unfinished. Many things from joycon2py aren't in here. Thanks!
+
 ## DISCLAIMER
 
 This project is **Windows-only**, primarily because the `ViGEmBus Driver` (used for virtual controller output) is exclusive to Windows.  
 You're free to make your own macOS/Linux fork if you want.
 
-This is a full C++ rewrite of the main joycon2py project, made by me. It's in HEAVY development, the exe file you see in the source is merely there for testing. I'll be iterating on it, adding the actual source files, and much more later, so keep this in mind.  
+This is a full C++ rewrite of the main joycon2py project, made by me.
 This branch has a couple tricks that makes it better than the py version:
 - It has full gyro support
 - Full MOUSE support
