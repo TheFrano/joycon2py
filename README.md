@@ -17,6 +17,12 @@ This branch has a couple tricks that makes it better than the py version:
 
 ---
 
+## TODO
+- Add fixed multiplayer support
+- Add fixed Dual/Pro/GC support
+- Add mouse support through Touchpad
+- Fix singular decoder issues and mappings
+
 ## DEPENDENCIES
 
 - [ViGEmBus drivers](https://github.com/ViGEm/ViGEmBus/releases/latest)
