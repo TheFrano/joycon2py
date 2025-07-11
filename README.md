@@ -18,10 +18,10 @@ This branch has a couple tricks that makes it better than the py version:
 ---
 
 ## TODO
-- Add fixed multiplayer support
-- Add fixed Dual/Pro/GC support
-- Add mouse support through Touchpad
-- Fix singular decoder issues and mappings
+- Add fixed multiplayer support (Somewhat difficult right now, especially in C++)
+- Add fixed Dual/Pro/GC support (Dual has been added, the rest should be really simple.)
+- Add mouse support through Touchpad (Not a huge priority, easy)
+- Fix singular decoder issues and mappings (Easy)
 
 ## DEPENDENCIES
 
