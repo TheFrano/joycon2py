@@ -22,9 +22,8 @@ This branch has a couple tricks that makes it better than the py version:
 ---
 
 ## TODO
-- Add fixed Dual/Pro/GC support (Dual has been added, the rest should be really simple.)
 - Add mouse support through Touchpad (Not a huge priority, easy)
-- Fix singular decoder issues and mappings (Easy)
+- Fix small decoder issues and mappings (Easy)
 
 ## DEPENDENCIES
 
