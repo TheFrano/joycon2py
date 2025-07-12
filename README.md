@@ -21,9 +21,15 @@ This branch has a couple tricks that makes it better than the py version:
 
 ---
 
-## TODO
-- Add mouse support through Touchpad (Not a huge priority, easy)
-- Fix small decoder issues and mappings (Easy)
+## PROGRESS
+- Multiplayer (Works)
+- Single Decoder (Works, needs slight Sideways mapping changes)
+- Dual Decoder (Works, Perfect)
+- Pro Decoder (In-Progress, semi-working)
+- GC Decoder (Nothing yet)
+
+- Gyro Support (Yes)
+- Mouse Support (Yeah, but the speed needs to be increased)
 
 ## DEPENDENCIES
 
