@@ -1,4 +1,5 @@
 import vgamepad as vg
+from enum import Enum
 
 # Button masks (based on extended bitfield for NSO GC controller)
 BUTTON_MASKS = {
@@ -6,8 +7,8 @@ BUTTON_MASKS = {
     0x000400000000: vg.XUSB_BUTTON.XUSB_GAMEPAD_B,
     0x000200000000: vg.XUSB_BUTTON.XUSB_GAMEPAD_X,
     0x000100000000: vg.XUSB_BUTTON.XUSB_GAMEPAD_Y,
-    0x004000000000: vg.XUSB_BUTTON.XUSB_GAMEPAD_RIGHT_SHOULDER,
-    0x000000400000: vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_SHOULDER,
+    0x008000000000: vg.XUSB_BUTTON.XUSB_GAMEPAD_RIGHT_SHOULDER,
+    0x000000800000: vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_SHOULDER,
     0x000000020000: vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_UP,
     0x000000040000: vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_RIGHT,
     0x000000010000: vg.XUSB_BUTTON.XUSB_GAMEPAD_DPAD_DOWN,
@@ -21,9 +22,21 @@ BUTTON_MASKS = {
 
 # Trigger bit masks
 TRIGGER_MASKS = {
-    "LT": 0x000000800000,
-    "RT": 0x008000000000,
+    "LT": 0x000000400000,
+    "RT": 0x004000000000,
 }
+
+THUMB_TRIGGER_MASK = {
+    0x000000400000: vg.XUSB_BUTTON.XUSB_GAMEPAD_LEFT_THUMB,
+    0x004000000000: vg.XUSB_BUTTON.XUSB_GAMEPAD_RIGHT_THUMB,
+}
+
+class Trigger_Type (Enum):
+    ANALOGUE = 1
+    DIGITAL = 2
+    ANALOGUE_THUMBTRIGGER = 3 
+    ONLY_THUMBTRIGGER = 4 #usefull for remapping
+
 
 def decode_joystick(data, label=""):
     if len(data) != 3:
@@ -46,7 +59,29 @@ def decode_joystick(data, label=""):
 
     return int(x_norm * 32767), int(y_norm * 32767)
 
-async def handle_gc_notification(sender, data, gamepad):
+def decode_trigger(data, trigger_type=Trigger_Type.ANALOGUE):
+    
+    if len(data) != 2:
+        print(f"⚠️ joystick: invalid data length")
+        return 0, 0
+    l = data[0]
+    r = data[1]
+    l_norm = l / 235 * 255
+    r_norm = r / 235 * 255
+    
+    deadzone = 45
+    if (l_norm < deadzone):
+        l_norm = 0;
+    if (r_norm < deadzone):
+        r_norm = 0;
+        
+    l_norm = max(0, min(255, l_norm))
+    r_norm = max(0, min(255, r_norm))
+    
+    return int(l_norm), int(r_norm)
+ 
+
+async def handle_gc_notification(sender, data, gamepad, trigger_type=Trigger_Type.ANALOGUE):
     if len(data) < 22:
         print("⚠️ Packet too short:", len(data))
         return
@@ -64,8 +99,33 @@ async def handle_gc_notification(sender, data, gamepad):
         else:
             gamepad.release_button(button)
 
-    lt = 255 if state & TRIGGER_MASKS["LT"] else 0
-    rt = 255 if state & TRIGGER_MASKS["RT"] else 0
+    match trigger_type:
+        case Trigger_Type.ANALOGUE:
+            lt, rt = decode_trigger(data[60:62])
+        case Trigger_Type.DIGITAL:
+            lt = 255 if state & TRIGGER_MASKS["LT"] else 0
+            rt = 255 if state & TRIGGER_MASKS["RT"] else 0
+        case Trigger_Type.ANALOGUE_THUMBTRIGGER:
+            lt, rt = decode_trigger(data[60:62])
+            for mask, button in THUMB_TRIGGER_MASK.items():
+                if state & mask:
+                    print(f"🔘 Press: {button}")
+                    gamepad.press_button(button)
+                else:
+                    gamepad.release_button(button)
+        case Trigger_Type.ONLY_THUMBTRIGGER:
+            lt = 0
+            rt = 0
+            for mask, button in THUMB_TRIGGER_MASK.items():
+                if state & mask:
+                    print(f"🔘 Press: {button}")
+                    gamepad.press_button(button)
+                else:
+                    gamepad.release_button(button)
+        case _:
+            lt = 0
+            rt = 0
+
     print(f"🔺 LT: {lt} | RT: {rt}")
     gamepad.left_trigger(lt)
     gamepad.right_trigger(rt)

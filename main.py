@@ -1,6 +1,7 @@
 import asyncio
 from bleak import BleakScanner, BleakClient
 import vgamepad as vg
+from gc_logic import Trigger_Type
 
 # Constants
 JOYCON_MANUFACTURER_ID = 1363
@@ -162,10 +163,10 @@ async def handle_pro_controller(client, player: Player):
         await handle_pro_notification(sender, data, player.gamepad)
     await client.start_notify(INPUT_REPORT_UUID, cb)
 
-async def handle_gc_controller(client, player: Player):
+async def handle_gc_controller(client, player: Player, trigger_type:Trigger_Type):
     from gc_logic import handle_gc_notification
     async def cb(sender, data):
-        await handle_gc_notification(sender, data, player.gamepad)
+        await handle_gc_notification(sender, data, player.gamepad, trigger_type)
     await client.start_notify(INPUT_REPORT_UUID, cb)
 
 async def setup_player(number):
@@ -218,14 +219,24 @@ async def setup_player(number):
             return player
 
         elif choice == "4":
+            trigger_type = input ("Trigger Type? (1=Analogue, 2=Digital, 3=Analogue + Digital as L3/R3, 4=Digital as L3/R3): ")
+            if trigger_type == "2":
+                trigger_type = Trigger_Type.DIGITAL
+            elif trigger_type =="3":
+                trigger_type = Trigger_Type.ANALOGUE_THUMBTRIGGER
+            elif trigger_type == "4":
+                trigger_type = Trigger_Type.ONLY_THUMBTRIGGER
+            else:
+                trigger_type = Trigger_Type.ANALOGUE
+            
             device = await scan_device(f"Player {number} GameCube Controller")
             if not device:
                 return None
             used_addresses.add(device.address)
-
+            
             player = Player(number, "GC_CONTROLLER")
-            client = await connect_and_setup(device, player, handle_gc_controller)
-            asyncio.create_task(maintain_connection_loop(client, device, player, handle_gc_controller))
+            client = await connect_and_setup(device, player, handle_gc_controller, trigger_type)
+            asyncio.create_task(maintain_connection_loop(client, device, player, handle_gc_controller, trigger_type))
             return player
 
         else:
