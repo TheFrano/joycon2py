@@ -16,7 +16,7 @@ You're free to make your own macOS/Linux fork if you want.
 Supported controllers:  
 Joy-Con 2: Full support  
 Pro Controller 2: Full support  
-NSO GC Controller: Semi support (Joysticks confirmed to work, buttons may not be mapped/mapped correctly in code yet, requires data sent over by someone with one)  
+NSO GC Controller: Full support
 
 If the program crashes, it means it couldn't connect to your joycon, often caused by:  
 1. Disconnecting and connecting in a short amount of time. Fix - Wait a little before reconnecting them
@@ -33,7 +33,7 @@ Their data WAS found, however vgamepad can't use the data. If you want this, che
 
 ## DEPENDENCIES
 
-- Python (3.7+)
+- Python (3.10+)
 - [`bleak`](https://github.com/hbldh/bleak)  
   → `pip install bleak`  
 - [`vgamepad`](https://github.com/yannbouteiller/vgamepad)  
