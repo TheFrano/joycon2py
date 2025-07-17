@@ -5,7 +5,7 @@ A lightweight Python script that turns the Joy-Con 2's and the Pro Controller 2 
 ---
 ## LOOK! NEW STUFF!
 Theres a new version of the project, here!  
-https://github.com/TheFrano/joycon2py/tree/cpp  
+[https://github.com/TheFrano/joycon2py/tree/cpp  ](https://github.com/TheFrano/joycon2cpp)
 It's a C++ rewrite of the entire project, to implement Gyro/Mouse using a DS4 controller. Check it out!  
 
 ## DISCLAIMER
