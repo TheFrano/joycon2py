@@ -6,7 +6,7 @@ A lightweight Python script that turns the Joy-Con 2's and the Pro Controller 2 
 
 ## DISCLAIMER
 
-THIS SPECIFIC PROJECT IS NO LONGER IN DEVELOPMENT BY ME. PLEASE CHECK OUT THE C++ VERSION:
+## THIS SPECIFIC PROJECT IS NO LONGER IN DEVELOPMENT BY ME. PLEASE CHECK OUT THE C++ VERSION:
 https://github.com/TheFrano/joycon2cpp  
 (however, you are free to use this version and make edits. just know this is more updated, has gyro and mouse, etc etc)
 
