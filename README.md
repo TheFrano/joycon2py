@@ -3,12 +3,14 @@
 A lightweight Python script that turns the Joy-Con 2's and the Pro Controller 2 into working PC Controllers.
 
 ---
-## LOOK! NEW STUFF!
-Theres a new version of the project, here!  
-https://github.com/TheFrano/joycon2cpp  
-It's a C++ rewrite of the entire project, to implement Gyro/Mouse using a DS4 controller. Check it out!  
 
 ## DISCLAIMER
+
+THIS SPECIFIC PROJECT IS NO LONGER IN DEVELOPMENT BY ME. PLEASE CHECK OUT THE C++ VERSION:
+https://github.com/TheFrano/joycon2cpp  
+(however, you are free to use this version and make edits. just know this is more updated, has gyro and mouse, etc etc)
+
+
 
 This project is **Windows-only**, primarily because `vgamepad` (used for virtual controller output) is exclusive to Windows.  
 You're free to make your own macOS/Linux fork if you want.
